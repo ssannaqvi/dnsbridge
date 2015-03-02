@@ -1,0 +1,121 @@
+#!/bin/sh -x
+#
+#       /etc/rc.d/init.d/dnsbridgeclient
+#
+#       Daemon for dnsbridgeclient.com
+#
+# chkconfig:   2345 98 98
+# description: Daemon for dnsbridgeclient.com
+
+### BEGIN INIT INFO
+# Provides:       dnsbridgeclient
+# Required-Start: $network cgconfig
+# Required-Stop:
+# Should-Start:
+# Should-Stop:
+# Default-Start: 2 3 4 5
+# Default-Stop:  0 1 6
+# Short-Description: start and stop dnsbridgeclient
+# Description: Daemon for dnsbridgeclient.com
+### END INIT INFO
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+prog="dnsbridgeclient"
+exec="/cluster/bin/$prog"
+pidfile="/var/run/$prog.pid"
+lockfile="/var/lock/subsys/$prog"
+logfile="/var/log/$prog"
+
+
+prestart() {
+    service cgconfig status > /dev/null
+
+    if [[ $? != 0 ]]; then
+        service cgconfig start
+    fi
+
+}
+
+start() {
+    [ -x $exec ] || exit 5
+
+    if ! [ -f $pidfile ]; then
+        prestart
+        printf "Starting $prog:\t"
+        echo "\n$(date)\n" >> $logfile
+        $exec -d 192.168.56.113:14000 &>> $logfile &
+        pid=$!
+        touch $lockfile
+    else
+        failure
+        echo
+        printf "$pidfile still exists...\n"
+        exit 7
+    fi
+}
+
+stop() {
+    echo -n $"Stopping $prog: "
+	pgrep dnsbridgeclient > $pidfile
+	mypid=`cat $pidfile`
+	rm $pidfile
+	kill -s 9 $mypid
+    retval=$?
+    echo
+    return $retval
+}
+
+restart() {
+    stop
+    start
+}
+
+reload() {
+    restart
+}
+
+force_reload() {
+    restart
+}
+
+rh_status() {
+    status -p $pidfile $prog
+}
+
+rh_status_q() {
+    rh_status >/dev/null 2>&1
+}
+
+case "$1" in
+    start)
+        rh_status_q && exit 0
+        $1
+        ;;
+    stop)
+        $1
+        ;;
+    restart)
+        $1
+        ;;
+    reload)
+        rh_status_q || exit 7
+        $1
+        ;;
+    force-reload)
+        force_reload
+        ;;
+    status)
+        rh_status
+        ;;
+    condrestart|try-restart)
+        rh_status_q || exit 0
+        restart
+        ;;
+    *)
+        echo $"Usage: $0 {start|stop|status|restart|condrestart|try-restart|reload|force-reload}"
+        exit 2
+esac
+
+exit $?

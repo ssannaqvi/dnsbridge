@@ -1,0 +1,13 @@
+$ORIGIN .
+$TTL 259200	; 3 days
+56.168.192.in-addr.arpa	IN SOA	ns.crunchy.lab. hostmaster.example.com. (
+				2001062502 ; serial
+				21600      ; refresh (6 hours)
+				3600       ; retry (1 hour)
+				604800     ; expire (1 week)
+				86400      ; minimum (1 day)
+				)
+			NS	ns.crunchy.lab.
+
+$ORIGIN 56.168.192.in-addr.arpa.
+$TTL 3500	; 58 minutes 20 seconds

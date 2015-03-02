@@ -1,0 +1,4 @@
+# /etc/sysconfig/docker
+
+# Modify these options if you want to change the way the docker daemon runs
+OPTIONS=--selinux-enabled --dns=192.168.56.103 --dns=192.168.0.1 -H fd://

@@ -1,0 +1,10 @@
+/_output
+/openshift.local.*
+/.project
+/.vagrant
+/examples/sample-app/openshift.local.*
+/examples/sample-app/logs/openshift.log
+*.swp
+.vimrc
+.vagrant-openshift.json
+.DS_Store

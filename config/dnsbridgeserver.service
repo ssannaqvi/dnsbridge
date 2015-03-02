@@ -1,0 +1,17 @@
+[Unit]
+Description=dnsbridge server
+After=docker.service
+
+[Service]
+Type=simple
+User=root
+Group=root
+Environment="PATH=/cluster/bin:/usr/pgsql-9.3/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin"
+SyslogIdentifier=dnsbridgeserver
+
+ExecStart=/cluster/bin/dnsbridgeserver -p 14000
+ExecStop=/bin/killall /cluster/bin/dnsbridgeserver
+
+[Install]
+WantedBy=multi-user.target
+

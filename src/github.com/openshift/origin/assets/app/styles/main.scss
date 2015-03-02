@@ -1,0 +1,50 @@
+$icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+// Variables must be imported before bootstrap to pick up our variable overrides
+@import "_variables.scss";
+// bower:scss
+@import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
+// endbower
+
+
+@import "_mixins.scss";
+@import "_fonts.scss";
+@import "_base.scss";
+@import "_core.scss";
+@import "_navbar.scss";
+@import "_footer.scss";
+@import "_tile.scss";
+@import "rcue/_navbar.scss";
+@import "rcue/_navbar-branded.scss";
+
+
+
+/* -------------------------------------------------------
+ * TODO Pull these styles out, there are for the prototype
+ */
+
+ .pod-running {
+   color: $brand-success;
+   font-weight: bold;
+   background-color: $brand-success;
+   border: 1px solid #317831;
+ }
+
+.animate-repeat.ng-move,
+.animate-repeat.ng-enter,
+.animate-repeat.ng-leave {
+  -webkit-transition:all 1s;
+  transition:all 1s;
+}
+
+.animate-repeat.ng-leave.ng-leave-active,
+.animate-repeat.ng-move,
+.animate-repeat.ng-enter {
+  opacity:0;
+}
+
+.animate-repeat.ng-leave,
+.animate-repeat.ng-move.ng-move-active,
+.animate-repeat.ng-enter.ng-enter-active {
+  opacity:1;
+}
+

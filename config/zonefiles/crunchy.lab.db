@@ -1,0 +1,13 @@
+$ORIGIN .
+$TTL 259200	; 3 days
+crunchy.lab		IN SOA	ns.crunchy.lab. root.crunchy.lab. (
+				530        ; serial
+				10800      ; refresh (3 hours)
+				900        ; retry (15 minutes)
+				604800     ; expire (1 week)
+				86400      ; minimum (1 day)
+				)
+			NS	ns.crunchy.lab.
+$ORIGIN crunchy.lab.
+$TTL 60	; 1 minute
+ns			A	192.168.56.103
